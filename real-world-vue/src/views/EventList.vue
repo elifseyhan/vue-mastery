@@ -6,9 +6,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import EventCard from '@/components/EventCard.vue';
-import axios from 'axios';
+import EventCard from '@/components/EventCard.vue'
+import EventService from '@/services/EventService.js'
 
 export default {
   name: 'EventList',
@@ -17,16 +16,18 @@ export default {
   },
   data() {
     return {
-      events: null
+      events: null,
     }
   },
-  created(){
-    axios.get('https://my-json-server.typicode.com/Code-Pop/Real-World_Vue-3/events').then(response => {
-      console.log('events: ', response.data);
-    }).catch(error => {
-      console.log(error);
-    })
-  }
+  created() {
+    EventService.getEvents()
+      .then((response) => {
+        this.events = response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
 }
 </script>
 
